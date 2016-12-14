@@ -30,6 +30,9 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,12 +52,23 @@ public class MainActivity extends AppCompatActivity {
 
     private String mUsername;
 
+    // main access point to Firebase db
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mMessageDatabaseReference;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mUsername = ANONYMOUS;
+
+        // setup firebase
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mMessageDatabaseReference = mFirebaseDatabase.getReference().child("message");
+
+
 
         // Initialize references to views
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -104,7 +118,13 @@ public class MainActivity extends AppCompatActivity {
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Send messages on click
+
+                // create a message object
+                FriendlyMessage friendlyMessage = new FriendlyMessage(mMessageEditText.getText().toString(), mUsername, null);
+
+                // push message obj to db
+                mMessageDatabaseReference.push().setValue(friendlyMessage);
+
 
                 // Clear input box
                 mMessageEditText.setText("");
