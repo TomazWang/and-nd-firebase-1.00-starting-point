@@ -20,14 +20,16 @@ public class FriendlyMessage {
     private String text;
     private String name;
     private String photoUrl;
+    private String authorID;
 
     public FriendlyMessage() {
     }
 
-    public FriendlyMessage(String text, String name, String photoUrl) {
+    public FriendlyMessage(String text, String name, String photoUrl, String uid) {
         this.text = text;
         this.name = name;
         this.photoUrl = photoUrl;
+        this.authorID = uid;
     }
 
     public String getText() {
@@ -52,5 +54,9 @@ public class FriendlyMessage {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public String getAuthorID() {
+        return authorID;
     }
 }

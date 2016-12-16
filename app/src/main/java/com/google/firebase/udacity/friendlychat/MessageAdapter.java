@@ -13,6 +13,8 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 public class MessageAdapter extends ArrayAdapter<FriendlyMessage> {
+    private String mUid;
+
     public MessageAdapter(Context context, int resource, List<FriendlyMessage> objects) {
         super(context, resource, objects);
     }
@@ -43,6 +45,14 @@ public class MessageAdapter extends ArrayAdapter<FriendlyMessage> {
         }
         authorTextView.setText(message.getName());
 
+        if(message.getAuthorID() != null && message.getAuthorID().equals(mUid)){
+            convertView.setBackgroundColor(getContext().getResources().getColor(android.R.color.holo_blue_light));
+        }
+
         return convertView;
+    }
+
+    public void setmUid(String mUid) {
+        this.mUid = mUid;
     }
 }
